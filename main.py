@@ -1,8 +1,12 @@
 import sqlite3
 import getpass_ak
-conn = sqlite3.connect('accounts.db')
+conn = sqlite3.connect('/C:/Users/reuel/Desktop/Quarantine/loginsystem/accounts.db')
 c = conn.cursor()
-x=0000
+
+cursor = conn.execute("SELECT max(uid) FROM accounts")
+for uid in cursor:
+    x=int(uid[0])
+    print("x=",x)
 
 class User:
     def __init__(self,usr_name,password,v_password,uq_id):
@@ -31,6 +35,7 @@ class User:
 
 
 def pass_validation(p):
+    
     pass
 
 print("Hello!")
