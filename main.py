@@ -30,6 +30,9 @@ class User:
         print(f"Unique Id : {self.uq_id}")
 
 
+def pass_validation(p):
+    pass
+
 print("Hello!")
 print("1.Login \n")
 print("2.Create an account \n")
