@@ -1,12 +1,12 @@
 import sqlite3
 import getpass_ak
-conn = sqlite3.connect('/C:/Users/reuel/Desktop/Quarantine/loginsystem/accounts.db')
+conn = sqlite3.connect('/C:/Users/reuel/Desktop/Quarantine/Project1/loginsystem/accounts.db')
 c = conn.cursor()
 
 cursor = conn.execute("SELECT max(uid) FROM accounts")
 for uid in cursor:
     x=int(uid[0])
-    print("x=",x)
+    #print("x=",x)
 
 class User:
     def __init__(self,usr_name,password,v_password,uq_id):
@@ -34,9 +34,38 @@ class User:
         print(f"Unique Id : {self.uq_id}")
 
 
-def pass_validation(p):
+def pass_validation(password):
+    l = len(password)
+
+    if l < 8:
+        print("Password is too short. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
+        return False
+    else:
+        for i in range(l):
+            if password[i].isupper():
+
+                for i in range(l):
+                    if password[i].islower():
+                        
+                        for i in range(l):
+                            if password[i].isdigit():
+
+                                for i in range(l):
+                                    if not password[i].isalnum():   
+                                       return True     
+                            
+                                print("Password does not have a special character. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
+                                return False
+
+                        print("Password does not have a digit. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
+                        return False
+
+                print("Password does not have a lower case character. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
+                return False
+                
+        print("Password does not have an upper case character. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
+        return False    
     
-    pass
 
 print("Hello!")
 print("1.Login \n")
@@ -59,7 +88,14 @@ if choice == 1:
 elif choice == 2:
     name = input("Enter your full name : ")
     usr = input("Enter your username : ")
-    passwrd = (getpass_ak.getpass('Enter password : '))
+    
+    exit=False
+    while exit==False:
+        passwrd = (getpass_ak.getpass('Enter password : '))
+        exit=pass_validation(passwrd)
+        if exit==True:
+            print("Password \'%s\' is valid."%passwrd)
+
     passwrd1 = (getpass_ak.getpass('Re enter password : '))
     uq_id = User.unique_id(x)
     u1 = User(usr,passwrd,passwrd1,uq_id)
@@ -67,7 +103,7 @@ elif choice == 2:
 
     if User.validation(passwrd,passwrd1) == True:
         print("Succesfully Created")
-        c.execute("INSERT INTO accounts VALUES('%s','%s',%d,'%s')"%(usr,passwrd,uq_id,name))
+        c.execute("INSERT INTO accounts VALUES('%s','%s',%d,'%s',0)"%(usr,passwrd,uq_id,name))
         conn.commit()
     else:
         print("Passwords don't match")
