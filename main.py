@@ -35,36 +35,34 @@ class User:
 
 
 def pass_validation(password):
-    l = len(password)
+    l=len(password)
+    lcount,ucount,dcount,scount=0,0,0,0
 
     if l < 8:
         print("Password is too short. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
         return False
+
     else:
         for i in range(l):
-            if password[i].isupper():
 
-                for i in range(l):
-                    if password[i].islower():
-                        
-                        for i in range(l):
-                            if password[i].isdigit():
+            if password[i].islower():
+                lcount+=1
 
-                                for i in range(l):
-                                    if not password[i].isalnum():   
-                                       return True     
-                            
-                                print("Password does not have a special character. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
-                                return False
+            elif password[i].isupper():
+                ucount+=1
 
-                        print("Password does not have a digit. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
-                        return False
+            elif password[i].isdigit():
+                dcount+=1
 
-                print("Password does not have a lower case character. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
-                return False
-                
-        print("Password does not have an upper case character. Must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
-        return False    
+            elif not password[i].isalnum():
+                scount+=1            
+
+        if (lcount > 0) and (ucount > 0) and (dcount > 0) and (scount > 0) and (lcount+ucount+dcount+scount==l):
+            return True
+        else:
+            print("Password must contain 8 characters including atleast 1 uppercase, 1 lowercase, 1 digit and 1 special character.")
+            return False
+
     
 
 print("Hello!")
