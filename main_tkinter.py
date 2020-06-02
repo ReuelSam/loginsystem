@@ -572,7 +572,7 @@ class CreateAccountPage(tk.Frame):
                     scount+=1            
 
             if (lcount > 0) and (ucount > 0) and (dcount > 0) and (scount > 0) and (lcount+ucount+dcount+scount==l):
-                print("Password Check: ",password,repassword)
+                #print("Password Check: ",password,repassword)
                 if password != repassword:
                     messagebox.showwarning(title="Error", message="Entered passwords do not match.")
                 else:        
